@@ -4,7 +4,7 @@ import os
 from random import choice
 from time import sleep, time
 from github import Github
-usr_name = '@adnim'
+usr_name = '@0xadnim'
 
 def get_infos():
     return os.environ.get('cons_key'), os.environ.get('cons_sec'), os.environ.get('tok_key'), os.environ.get('tok_sec'), os.environ.get('github_id'), os.environ.get('github_pw')
@@ -12,7 +12,7 @@ def get_infos():
 cons_key, cons_sec, tok_key, tok_sec, github_id, github_pw = get_infos()
 auth = tweepy.OAuthHandler(cons_key, cons_sec)
 auth.set_access_token(tok_key, tok_sec)
-api = tweepy.API(auth)
+api = tweepy.API(auth, wait_on_rate_limit=True)
 
 user = Github(github_id, github_pw)
 
@@ -44,7 +44,7 @@ def handle():
         print('Tweet sent!')
 
 def send_log(id):
-    api.update_status('오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
+    api.update_status(usr_name + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
 
 if __name__ == '__main__':
     tweet('Start Running Bot! ..At ' + str(time()) + '!')
