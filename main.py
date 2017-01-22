@@ -27,7 +27,7 @@ def today():
     return t_d - datetime.timedelta(hours=9)
 
 def get_today_commits():
-    for event in user.get_events():
+    for event in user.get_user().get_events():
         if event.created_at > today():
             if event.type in ['PushEvent', 'PullRequestEvent', 'IssueEvent']:
                 yield event
