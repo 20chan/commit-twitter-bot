@@ -2,7 +2,7 @@ import tweepy
 import datetime
 import os
 from random import choice
-from time import sleep
+from time import sleep, time
 from github import Github
 usr_name = '@adnim'
 
@@ -44,10 +44,10 @@ def handle():
         print('Tweet sent!')
 
 def send_log(id):
-    api.update_status('오늘 총 ' + len(list(get_today_commits())) +'커밋을 했어요!', id)
+    api.update_status('오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
 
 if __name__ == '__main__':
-    tweet('Start Running Bot! ..At' + str(datetime.datetime.today().second) + 'second!')
+    tweet('Start Running Bot! ..At ' + str(time()) + '!')
     lastId = -1
     while True:
         if today().hour > 14:
