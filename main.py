@@ -1,12 +1,15 @@
 import tweepy
 import datetime
+import os
 from random import choice
 from time import sleep
 from github import Github
 usr_name = '@adnim'
 
-f = open('key.config')
-cons_key, cons_sec, tok_key, tok_sec, github_id, github_pw = f.read().split()
+def get_infos():
+    return os.environ.get('cons_key'), os.environ.get('cons_sec'), os.environ.get('tok_key'), os.environ.get('tok_sec'), os.environ.get('github_id'), os.environ.get('github_pw')
+
+cons_key, cons_sec, tok_key, tok_sec, github_id, github_pw = get_infos()
 auth = tweepy.OAuthHandler(cons_key, cons_sec)
 auth.set_access_token(tok_key, tok_sec)
 api = tweepy.API(auth)
