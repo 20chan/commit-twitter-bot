@@ -46,14 +46,15 @@ def handle():
 def send_log(id):
     api.update_status('오늘 총 ' + len(list(get_today_commits())) +'커밋을 했어요!', id)
 
-tweet('Start Running Bot! ..At' + str(datetime.datetime.today().second) + 'second!')
-lastId = -1
-while True:
-    if today().hour > 14:
-        handle()
-    lm = api.mentions_timeline(count=1)[0]
-    if lm.user.screen_name == usr_name and lm.id != lastId:
-        lastId = lm.id
-        send_log(lastId)
+if __name__ == '__main__':
+    tweet('Start Running Bot! ..At' + str(datetime.datetime.today().second) + 'second!')
+    lastId = -1
+    while True:
+        if today().hour > 14:
+            handle()
+        lm = api.mentions_timeline(count=1)[0]
+        if lm.user.screen_name == usr_name and lm.id != lastId:
+            lastId = lm.id
+            send_log(lastId)
 
-    sleep(1)
+        sleep(1)
