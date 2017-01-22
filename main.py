@@ -43,6 +43,7 @@ def handle():
             pass
         print('Tweet sent!')
 
+tweet('Start Running Bot!')
 while True:
     if today().hour > 14:
         handle()
