@@ -51,7 +51,7 @@ lastId = -1
 while True:
     if today().hour > 14:
         handle()
-    lm = api.mentions_timeline(count=1)[0].id
+    lm = api.mentions_timeline(count=1)[0]
     if lm.user.screen_name == usr_name and lm.id != lastId:
         lastId = lm.id
         send_log(lastId)
