@@ -43,8 +43,17 @@ def handle():
             pass
         print('Tweet sent!')
 
+def send_log(id):
+    api.update_status('오늘 총 ' + len(list(get_today_commits())) +'커밋을 했어요!', id)
+
 tweet('Start Running Bot!')
+lastId = -1
 while True:
     if today().hour > 14:
         handle()
-    sleep(3600)
+    lm = api.mentions_timeline(count=1)[0].id
+    if lm.user.screen_name == usr_name and lm.id != lastId:
+        lastId = lm.id
+        send_log(lastId)
+
+    sleep(1)
