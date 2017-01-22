@@ -54,7 +54,7 @@ class mentionListener(tweepy.StreamListener):
 if __name__ == '__main__':
     tweet('Start Running Bot! ..At ' + str(time()) + '!')
     mlistener = mentionListener()
-    stream = tweepy.Stream(auth=api.auth, listener=mlistener())
+    stream = tweepy.Stream(auth=api.auth, listener=mlistener)
     stream.filter(track=['dailycommit_bot'])
     lastId = -1
     while True:
