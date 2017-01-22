@@ -46,15 +46,18 @@ def handle():
 def send_log(id):
     api.update_status(usr_name + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
 
+class mentionListener(tweepy.StreamListener):
+    def on_status(self, status):
+        print(status.text)
+        send_log(status.id)
+
 if __name__ == '__main__':
     tweet('Start Running Bot! ..At ' + str(time()) + '!')
+    mlistener = mentionListener()
+    stream = tweepy.Stream(auth=api.auth, listener=mlistener())
+    stream.filter(track=['dailycommit_bot'])
     lastId = -1
     while True:
         if today().hour > 14:
             handle()
-        lm = api.mentions_timeline(count=1)[0]
-        if lm.user.screen_name == usr_name and lm.id != lastId:
-            lastId = lm.id
-            send_log(lastId)
-
-        sleep(1)
+        sleep(1200)
