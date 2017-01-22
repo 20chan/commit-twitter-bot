@@ -46,7 +46,7 @@ def handle():
 def send_log(id):
     api.update_status('오늘 총 ' + len(list(get_today_commits())) +'커밋을 했어요!', id)
 
-tweet('Start Running Bot! ..At' + (datetime.datetime.today().second) + 'second!')
+tweet('Start Running Bot! ..At' + str(datetime.datetime.today().second) + 'second!')
 lastId = -1
 while True:
     if today().hour > 14:
