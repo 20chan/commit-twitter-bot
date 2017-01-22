@@ -1,0 +1,2 @@
+PyGithub==1.29
+tweepy==3.5.0
