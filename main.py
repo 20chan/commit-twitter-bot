@@ -32,11 +32,15 @@ def get_today_commits():
             break
 
 def handle():
-    #if len(list(get_today_commits())) == 0:
-        tweet(usr_name + ' ' + choice(msg_list))
+    if len(list(get_today_commits())) == 0:
+        try:
+            tweet(usr_name + ' ' + choice(msg_list))
+        except tweepy.error.TweepError:
+            print('Tweet duplicated')
+            pass
         print('Tweet sent!')
 
 while True:
     if today().hour > 14:
         handle()
-    sleep(30)
+    sleep(3600)
