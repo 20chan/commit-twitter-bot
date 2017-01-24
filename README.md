@@ -1,2 +1,6 @@
-# commit-twitter-bot
-one day one commit alert bot
+# 일일커밋 트위터 봇
+일일커밋을 도와주는 트위터 알림 봇입니다. 멘션으로 말을 걸면 오늘 커밋(푸쉬, 풀리퀘, 이슈)한 개수를 알려줍니다.
+
+### 멘션시
+
+![멘션시 반응](/preview/mention.png)
