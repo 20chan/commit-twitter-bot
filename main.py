@@ -43,13 +43,13 @@ def handle():
             pass
         print('Tweet sent!')
 
-def send_log(id):
-    api.update_status(usr_name + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
+def send_log(id, men):
+    api.update_status('@' + men + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
 
 class mentionListener(tweepy.StreamListener):
     def on_status(self, status):
         print(status.text)
-        send_log(status.id)
+        send_log(status.id, status._json['user']['screen_name'])
 
 if __name__ == '__main__':
     tweet('Start Running Bot! ..At ' + str(time()) + '!')
