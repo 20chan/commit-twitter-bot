@@ -4,6 +4,7 @@ import os
 from random import choice
 from time import sleep, time
 from github import Github
+import threading
 
 
 def get_infos():
@@ -41,7 +42,7 @@ def get_today_commits():
             break
 
 
-def handle():
+def handle(usr_name):
     if len(list(get_today_commits())) == 0:
         try:
             tweet(usr_name + ' ' + choice(msg_list))
@@ -51,22 +52,27 @@ def handle():
         print('Tweet sent!')
 
 
-def send_log(id, men):
-    api.update_status('@' + men + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
+def send_log(user_id, men):
+    api.update_status('@' + men + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', user_id)
 
 
-class mentionListener(tweepy.StreamListener):
+def run_auto():
+    while True:
+        if today().hour > 14:
+            handle('adnimpub_')
+        sleep(1200)
+
+
+class MentionListener(tweepy.StreamListener):
     def on_status(self, status):
         print(status.text)
         send_log(status.id, status._json['user']['screen_name'])
 
 if __name__ == '__main__':
+    lastId = -1
     tweet('Start Running Bot! ..At ' + str(time()) + '!')
-    listener = mentionListener()
+    th = threading.Thread(target=run_auto)
+    th.start()
+    listener = MentionListener()
     stream = tweepy.Stream(auth=api.auth, listener=listener)
     stream.filter(track=['dailycommit_bot'])
-    lastId = -1
-    while True:
-        if today().hour > 14:
-            handle()
-        sleep(1200)
