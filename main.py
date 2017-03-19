@@ -20,7 +20,7 @@ api = tweepy.API(auth, wait_on_rate_limit=True)
 
 user = Github(github_id, github_pw)
 
-msg_list = open('messages.txt', encoding='utf-8-sig').read().split('\n')
+msg_list = [s for s in open('messages.txt', encoding='utf-8-sig').read().split('\n') if s != '']
 
 
 def tweet(msg):
