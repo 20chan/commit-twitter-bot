@@ -53,7 +53,8 @@ def handle(usr_name):
 
 
 def send_log(user_id, men):
-    api.update_status('@' + men + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', user_id)
+    api.update_status('@' + men + ' 오늘 총 ' + str(len(list(get_today_commits()))) + '커밋을 했어요!',
+                      in_reply_to_status_id=user_id)
 
 
 def run_auto():
