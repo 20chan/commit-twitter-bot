@@ -59,14 +59,16 @@ def send_log(user_id, men):
 def run_auto():
     while True:
         if today().hour > 14:
-            handle('adnimpub_')
-        sleep(1200)
+            handle('@adnimpub_')
+            sleep(86400)
+        else:
+            sleep(10)
 
 
 class MentionListener(tweepy.StreamListener):
     def on_status(self, status):
         print(status.text)
-        send_log(status.id, status._json['user']['screen_name'])
+        send_log(status.id, status.user.screen_name)
 
 if __name__ == '__main__':
     lastId = -1
