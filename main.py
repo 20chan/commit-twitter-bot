@@ -4,10 +4,13 @@ import os
 from random import choice
 from time import sleep, time
 from github import Github
-usr_name = '@0xadnim'
+
 
 def get_infos():
-    return os.environ.get('cons_key'), os.environ.get('cons_sec'), os.environ.get('tok_key'), os.environ.get('tok_sec'), os.environ.get('github_id'), os.environ.get('github_pw')
+    if os.path.exists('./key.config'):
+        return open('key.config', encoding='utf-8').read().split('\n')
+    else:
+        return os.environ.get('cons_key'), os.environ.get('cons_sec'), os.environ.get('tok_key'), os.environ.get('tok_sec'), os.environ.get('github_id'), os.environ.get('github_pw')
 
 cons_key, cons_sec, tok_key, tok_sec, github_id, github_pw = get_infos()
 auth = tweepy.OAuthHandler(cons_key, cons_sec)
@@ -18,13 +21,16 @@ user = Github(github_id, github_pw)
 
 msg_list = open('messages.txt', encoding='utf-8-sig').read().split('\n')
 
+
 def tweet(msg):
     api.update_status(msg)
+
 
 def today():
     t = datetime.datetime.today()
     t_d = datetime.datetime(t.year, t.month, t.day)
     return t_d - datetime.timedelta(hours=9)
+
 
 def get_today_commits():
     for event in user.get_user(github_id).get_events():
@@ -33,6 +39,7 @@ def get_today_commits():
                 yield event
         else:
             break
+
 
 def handle():
     if len(list(get_today_commits())) == 0:
@@ -43,8 +50,10 @@ def handle():
             pass
         print('Tweet sent!')
 
+
 def send_log(id, men):
     api.update_status('@' + men + ' 오늘 총 ' + str(len(list(get_today_commits()))) +'커밋을 했어요!', id)
+
 
 class mentionListener(tweepy.StreamListener):
     def on_status(self, status):
@@ -53,8 +62,8 @@ class mentionListener(tweepy.StreamListener):
 
 if __name__ == '__main__':
     tweet('Start Running Bot! ..At ' + str(time()) + '!')
-    mlistener = mentionListener()
-    stream = tweepy.Stream(auth=api.auth, listener=mlistener)
+    listener = mentionListener()
+    stream = tweepy.Stream(auth=api.auth, listener=listener)
     stream.filter(track=['dailycommit_bot'])
     lastId = -1
     while True:
