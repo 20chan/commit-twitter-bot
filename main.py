@@ -30,7 +30,7 @@ def tweet(msg):
 def today():
     t = datetime.datetime.today()
     t_d = datetime.datetime(t.year, t.month, t.day)
-    return t_d - datetime.timedelta(hours=9)
+    return t_d
 
 
 def get_today_commits():
@@ -59,11 +59,11 @@ def send_log(user_id, men):
 
 def run_auto():
     while True:
-        if today().hour > 14:
+        if today().hour > 20:
             handle('@adnimpub_')
             sleep(86400)
         else:
-            sleep(10)
+            sleep(100)
 
 
 class MentionListener(tweepy.StreamListener):
