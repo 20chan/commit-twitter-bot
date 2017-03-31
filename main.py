@@ -30,7 +30,7 @@ def tweet(msg):
 def today():
     t = datetime.datetime.today()
     t_d = datetime.datetime(t.year, t.month, t.day)
-    return t - t_d
+    return t_d
 
 
 def get_today_commits():
