@@ -28,7 +28,9 @@ def tweet(msg):
 
 
 def today():
-    return datetime.datetime.today()
+    t = datetime.datetime.today()
+    t_d = datetime.datetime(t.year, t.month, t.day)
+    return t - t_d
 
 
 def get_today_commits():
@@ -57,7 +59,7 @@ def send_log(user_id, men):
 
 def run_auto():
     while True:
-        if today().hour > 20:
+        if datetime.datetime.today().hour > 20:
             handle('@adnimpub_')
             sleep(86400)
         else:
